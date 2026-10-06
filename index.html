@@ -3,9 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Nickname Atlas of Southeast Asia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #f4f0e6;
+            --dark-green: #0a3d34;
+            --gold-accent: #d4a755;
+            --card-white: #ffffff;
+            --text-muted: #708078;
+            --input-border: #b8c4be;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-cream);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .atlas-container {
+            width: 100%;
+            max-width: 580px;
+            background: var(--dark-green);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Hero Header Section */
+        .hero {
+            padding: 45px 30px 100px;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .sub-header {
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            line-height: 1.15;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .title em {
+            font-style: italic;
+            color: var(--gold-accent);
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 13px;
+            color: #c0ceca;
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Curved transition divider */
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--bg-cream);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+
+        /* White Form Card */
+        .card-wrapper {
+            background: var(--bg-cream);
+            padding: 0 35px 45px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lookup-card {
+            background: var(--card-white);
+            padding: 35px 30px;
+            border-radius: 2px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            position: relative;
+            margin-top: -60px;
+        }
+
+        /* Decorative Gold Corner Brackets */
+        .lookup-card::before, .lookup-card::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--gold-accent);
+        }
+
+        .lookup-card::before {
+            top: -12px;
+            left: -12px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .lookup-card::after {
+            bottom: -12px;
+            right: -12px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .card-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #b07d48;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--dark-green);
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        /* Input Controls */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .country-input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid var(--input-border);
+            padding: 10px 0;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--dark-green);
+            outline: none;
+            transition: border-color 0.2s;
+            background: transparent;
+        }
+
+        .country-input::placeholder {
+            color: #a0aca6;
+        }
+
+        .country-input:focus {
+            border-bottom-color: var(--dark-green);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--dark-green);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 11px;
+            font-family: inherit;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            background: #115045;
+        }
+
+        /* Results Box */
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f7f9f8;
+            border-left: 3px solid var(--gold-accent);
+            display: none;
+        }
+
+        .result-box.active {
+            display: block;
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: var(--dark-green);
+            margin-bottom: 4px;
+        }
+
+        .result-nickname {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
 <body>
-    
+
+    <div class="atlas-container">
+        <!-- Header -->
+        <div class="hero">
+            <div class="sub-header">Eleven Nations &bull; One Archipelago of Names</div>
+            <h1 class="title">The <em>Nickname</em><br>Atlas of Southeast Asia</h1>
+            <p class="description">Every nation in this region carries a name earned through geography, history, and myth. Type a country below to uncover the title it has been given.</p>
+            <div class="wave-divider"></div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="card-wrapper">
+            <div class="lookup-card">
+                <div class="card-label">Country Lookup</div>
+                <h2 class="card-title">Enter a Southeast Asian country</h2>
+                
+                <form id="lookup-form" onsubmit="handleLookup(event)">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="country-input" 
+                            class="country-input" 
+                            placeholder="e.g. Philippines, Vietnam, Thailand..." 
+                            autocomplete="off" 
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="submit-btn">Reveal Nickname</button>
+                </form>
+
+                <!-- Result Container -->
+                <div id="result" class="result-box">
+                    <div id="result-title" class="result-title"></div>
+                    <div id="result-nickname" class="result-nickname"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Southeast Asian Nicknames Database
+        const nicknames = {
+            "brunei": "The Abode of Peace",
+            "cambodia": "The Kingdom of Wonder",
+            "east timor": "The Land of the Rising Sun",
+            "timor-leste": "The Land of the Rising Sun",
+            "indonesia": "The Emerald of the Equator",
+            "laos": "The Land of a Million Elephants",
+            "malaysia": "Truly Asia",
+            "myanmar": "The Golden Land",
+            "burma": "The Golden Land",
+            "philippines": "The Pearl of the Orient Seas",
+            "singapore": "The Lion City",
+            "thailand": "The Land of Smiles",
+            "vietnam": "The Land of the Ascending Dragon"
+        };
+
+        function handleLookup(event) {
+            event.preventDefault();
+            const input = document.getElementById("country-input").value.trim().toLowerCase();
+            const resultBox = document.getElementById("result");
+            const resultTitle = document.getElementById("result-title");
+            const resultNickname = document.getElementById("result-nickname");
+
+            if (nicknames[input]) {
+                const formattedName = input.charAt(0).toUpperCase() + input.slice(1);
+                resultTitle.textContent = formattedName;
+                resultNickname.textContent = `"${nicknames[input]}"`;
+                resultBox.classList.add("active");
+            } else {
+                resultTitle.textContent = "Country Not Found";
+                resultNickname.textContent = "Please enter one of the 11 Southeast Asian nations.";
+                resultBox.classList.add("active");
+            }
+        }
+    </script>
 </body>
 </html>
