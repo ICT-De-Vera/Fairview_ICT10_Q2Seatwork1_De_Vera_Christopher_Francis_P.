@@ -8,14 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-cream: #f4f0e6;
-            --dark-green: #0a3d34;
-            --gold-accent: #d4a755;
-            --card-white: #ffffff;
-            --text-muted: #708078;
-            --input-border: #b8c4be;
-        }
 
         * {
             box-sizing: border-box;
@@ -25,7 +17,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-cream);
+            background-color: #f4f0e6;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,9 +28,9 @@
         .atlas-container {
             width: 100%;
             max-width: 580px;
-            background: var(--dark-green);
+            background: #0a3d34;
             border-radius: 4px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 35px #00000026;
             overflow: hidden;
             position: relative;
         }
@@ -49,7 +41,7 @@
             text-align: center;
             color: #ffffff;
             position: relative;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-image: radial-gradient(circle, #FFFFFF0D 1px, transparent 1px);
             background-size: 24px 24px;
         }
 
@@ -57,7 +49,7 @@
             font-size: 10px;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.7);
+            color: #FFFFFFB3;
             margin-bottom: 12px;
             font-weight: 600;
         }
@@ -72,7 +64,7 @@
 
         .title em {
             font-style: italic;
-            color: var(--gold-accent);
+            color: #d4a755;
             font-weight: 600;
         }
 
@@ -91,23 +83,23 @@
             left: 0;
             width: 100%;
             height: 40px;
-            background: var(--bg-cream);
+            background: #f4f0e6;
             border-radius: 50% 50% 0 0 / 100% 100% 0 0;
         }
 
         /* White Form Card */
         .card-wrapper {
-            background: var(--bg-cream);
+            background: #f4f0e6;
             padding: 0 35px 45px;
             position: relative;
             z-index: 2;
         }
 
         .lookup-card {
-            background: var(--card-white);
+            background: #ffffff;
             padding: 35px 30px;
             border-radius: 2px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px #0000000D;
             position: relative;
             margin-top: -60px;
         }
@@ -118,7 +110,7 @@
             position: absolute;
             width: 18px;
             height: 18px;
-            border: 1.5px solid var(--gold-accent);
+            border: 1.5px solid #d4a755;
         }
 
         .lookup-card::before {
@@ -147,7 +139,7 @@
         .card-title {
             font-family: 'Playfair Display', serif;
             font-size: 24px;
-            color: var(--dark-green);
+            color: #0a3d34;
             font-weight: 700;
             margin-bottom: 25px;
         }
@@ -160,11 +152,11 @@
         .country-input {
             width: 100%;
             border: none;
-            border-bottom: 1px solid var(--input-border);
+            border-bottom: 1px solid #b8c4be;
             padding: 10px 0;
             font-size: 14px;
             font-family: inherit;
-            color: var(--dark-green);
+            color: #0a3d34;
             outline: none;
             transition: border-color 0.2s;
             background: transparent;
@@ -175,12 +167,12 @@
         }
 
         .country-input:focus {
-            border-bottom-color: var(--dark-green);
+            border-bottom-color: #0a3d34;
         }
 
         .submit-btn {
             width: 100%;
-            background: var(--dark-green);
+            background: #0a3d34;
             color: #ffffff;
             border: none;
             padding: 14px;
@@ -204,7 +196,7 @@
             padding: 15px;
             border-radius: 4px;
             background: #f7f9f8;
-            border-left: 3px solid var(--gold-accent);
+            border-left: 3px solid #d4a755;
             display: none;
         }
 
@@ -215,13 +207,13 @@
         .result-title {
             font-family: 'Playfair Display', serif;
             font-size: 18px;
-            color: var(--dark-green);
+            color: #0a3d34;
             margin-bottom: 4px;
         }
 
         .result-nickname {
             font-size: 13px;
-            color: var(--text-muted);
+            color: #708078;
         }
     </style>
 </head>
@@ -242,18 +234,11 @@
                 <div class="card-label">Country Lookup</div>
                 <h2 class="card-title">Enter a Southeast Asian country</h2>
                 
-                <form id="lookup-form" onsubmit="handleLookup(event)">
+                <form id="lookup-form">
                     <div class="input-group">
-                        <input 
-                            type="text" 
-                            id="country-input" 
-                            class="country-input" 
-                            placeholder="e.g. Philippines, Vietnam, Thailand..." 
-                            autocomplete="off" 
-                            required
-                        >
+                        <input type="text" id="country-input" class="country-input" placeholder="Enter a country..." autocomplete="off" required>
                     </div>
-                    <button type="submit" class="submit-btn">Reveal Nickname</button>
+                    <button type="submit" class="submit-btn" pyclick="lookup_country">Reveal Nickname</button>
                 </form>
 
                 <!-- Result Container -->
@@ -264,43 +249,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Southeast Asian Nicknames Database
-        const nicknames = {
-            "brunei": "The Abode of Peace",
-            "cambodia": "The Kingdom of Wonder",
-            "east timor": "The Land of the Rising Sun",
-            "timor-leste": "The Land of the Rising Sun",
-            "indonesia": "The Emerald of the Equator",
-            "laos": "The Land of a Million Elephants",
-            "malaysia": "Truly Asia",
-            "myanmar": "The Golden Land",
-            "burma": "The Golden Land",
-            "philippines": "The Pearl of the Orient Seas",
-            "singapore": "The Lion City",
-            "thailand": "The Land of Smiles",
-            "vietnam": "The Land of the Ascending Dragon"
-        };
-
-        function handleLookup(event) {
-            event.preventDefault();
-            const input = document.getElementById("country-input").value.trim().toLowerCase();
-            const resultBox = document.getElementById("result");
-            const resultTitle = document.getElementById("result-title");
-            const resultNickname = document.getElementById("result-nickname");
-
-            if (nicknames[input]) {
-                const formattedName = input.charAt(0).toUpperCase() + input.slice(1);
-                resultTitle.textContent = formattedName;
-                resultNickname.textContent = `"${nicknames[input]}"`;
-                resultBox.classList.add("active");
-            } else {
-                resultTitle.textContent = "Country Not Found";
-                resultNickname.textContent = "Please enter one of the 11 Southeast Asian nations.";
-                resultBox.classList.add("active");
-            }
-        }
-    </script>
 </body>
 </html>
