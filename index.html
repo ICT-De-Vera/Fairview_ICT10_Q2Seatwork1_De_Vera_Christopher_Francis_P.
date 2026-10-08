@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Nickname Atlas of Southeast Asia</title>
+    <meta name="theme-color" content="#07111f">
+    <meta name="description" content="Check whether someone is a member of the ICT Tech Club.">
+    <title>ICT Tech Club | Member Checker</title>
+
+    <!-- PyScript Releases -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,64 +22,77 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f4f0e6;
+            font-family: 'DM Sans', sans-serif;
+            background: #07111f;
+            background-image: radial-gradient(ellipse at 50% 0%, #12344c 0%, transparent 55%), linear-gradient(135deg, #07111f 0%, #0b1727 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 32px 20px;
+            color: #e9f2f8;
         }
 
         .atlas-container {
             width: 100%;
-            max-width: 580px;
-            background: #0a3d34;
-            border-radius: 4px;
-            box-shadow: 0 15px 35px #00000026;
+            max-width: 620px;
+            background: #0c1a2a;
+            border: 1px solid #1e3549;
+            border-radius: 24px;
+            box-shadow: 0 28px 80px #0008;
             overflow: hidden;
             position: relative;
         }
 
         /* Hero Header Section */
         .hero {
-            padding: 45px 30px 100px;
-            text-align: center;
-            color: #ffffff;
+            padding: 38px 42px 78px;
+            color: #f4f9ff;
             position: relative;
-            background-image: radial-gradient(circle, #FFFFFF0D 1px, transparent 1px);
-            background-size: 24px 24px;
+            background: radial-gradient(circle, #6ce6d51a 1px, transparent 1px);
+            background-size: 22px 22px;
         }
 
         .sub-header {
-            font-size: 10px;
-            letter-spacing: 0.25em;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: #FFFFFFB3;
-            margin-bottom: 12px;
-            font-weight: 600;
+            color: #a4becd;
+            margin-bottom: 22px;
+            font-weight: 700;
+        }
+
+        .sub-header::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #5ce0c1;
+            box-shadow: 0 0 14px #5ce0c1;
         }
 
         .title {
-            font-family: 'Playfair Display', serif;
-            font-size: 38px;
-            line-height: 1.15;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(34px, 7vw, 48px);
+            line-height: 1.08;
             font-weight: 700;
-            margin-bottom: 15px;
+            letter-spacing: -0.045em;
+            margin-bottom: 16px;
         }
 
         .title em {
-            font-style: italic;
-            color: #d4a755;
-            font-weight: 600;
+            font-style: normal;
+            color: #63e2c4;
         }
 
         .description {
-            font-size: 13px;
-            color: #c0ceca;
-            max-width: 420px;
-            margin: 0 auto;
-            line-height: 1.5;
+            font-size: 14px;
+            color: #a5b8c7;
+            max-width: 440px;
+            line-height: 1.7;
         }
 
         /* Curved transition divider */
@@ -82,170 +101,150 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 40px;
-            background: #f4f0e6;
-            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #34546a, transparent);
         }
 
-        /* White Form Card */
+        /* Card Controls */
         .card-wrapper {
-            background: #f4f0e6;
-            padding: 0 35px 45px;
+            background: #0c1a2a;
+            padding: 0 42px 42px;
             position: relative;
             z-index: 2;
         }
 
         .lookup-card {
-            background: #ffffff;
-            padding: 35px 30px;
-            border-radius: 2px;
-            box-shadow: 0 10px 25px #0000000D;
+            background: #102236;
+            border: 1px solid #203b51;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px #0003;
             position: relative;
-            margin-top: -60px;
-        }
-
-        /* Decorative Gold Corner Brackets */
-        .lookup-card::before, .lookup-card::after {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            border: 1.5px solid #d4a755;
-        }
-
-        .lookup-card::before {
-            top: -12px;
-            left: -12px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .lookup-card::after {
-            bottom: -12px;
-            right: -12px;
-            border-left: none;
-            border-top: none;
         }
 
         .card-label {
             font-size: 10px;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.17em;
             text-transform: uppercase;
-            color: #b07d48;
+            color: #61d9bd;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 9px;
         }
 
         .card-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            color: #0a3d34;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 23px;
+            color: #f0f6fc;
             font-weight: 700;
-            margin-bottom: 25px;
+            letter-spacing: -0.025em;
+            margin-bottom: 22px;
         }
 
-        /* Input Controls */
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
-        .country-input {
+        .name-input {
             width: 100%;
-            border: none;
-            border-bottom: 1px solid #b8c4be;
-            padding: 10px 0;
-            font-size: 14px;
+            border: 1px solid #2d485e;
+            border-radius: 10px;
+            padding: 15px 16px;
+            font-size: 15px;
             font-family: inherit;
-            color: #0a3d34;
+            color: #f0f6fc;
             outline: none;
-            transition: border-color 0.2s;
-            background: transparent;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #0b1928;
         }
 
-        .country-input::placeholder {
-            color: #a0aca6;
+        .name-input::placeholder {
+            color: #71879a;
         }
 
-        .country-input:focus {
-            border-bottom-color: #0a3d34;
+        .name-input:focus {
+            border-color: #55d8b9;
+            box-shadow: 0 0 0 3px #55d8b922;
         }
 
         .submit-btn {
             width: 100%;
-            background: #0a3d34;
-            color: #ffffff;
+            background: #5ce0c1;
+            color: #08201e;
             border: none;
-            padding: 14px;
-            font-size: 11px;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
             font-family: inherit;
             font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 5px;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
         }
 
         .submit-btn:hover {
-            background: #115045;
+            background: #7aecd2;
+            box-shadow: 0 7px 20px #5ce0c133;
+            transform: translateY(-1px);
         }
 
         /* Results Box */
         .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            background: #f7f9f8;
-            border-left: 3px solid #d4a755;
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 10px;
+            background: #102c2b;
+            border: 1px solid #24564d;
             display: none;
+            color: #a1f1db;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .result-box.active {
             display: block;
         }
 
-        .result-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: #0a3d34;
-            margin-bottom: 4px;
+        .result-box.not-member {
+            background: #2a2025;
+            border-color: #65434b;
+            color: #ffc0c5;
         }
 
-        .result-nickname {
-            font-size: 13px;
-            color: #708078;
+        .roster-note {
+            color: #8198aa;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 13px;
         }
     </style>
 </head>
 <body>
 
     <div class="atlas-container">
-        <!-- Header -->
         <div class="hero">
-            <div class="sub-header">Eleven Nations &bull; One Archipelago of Names</div>
-            <h1 class="title">The <em>Nickname</em><br>Atlas of Southeast Asia</h1>
-            <p class="description">Every nation in this region carries a name earned through geography, history, and myth. Type a country below to uncover the title it has been given.</p>
+            <div class="sub-header">ICT Club Checker</div>
+            <h1 class="title">Member<br><em>Checker</em></h1>
+            <p class="description">Verify ICT Tech Club membership in seconds. Enter a name below to check it against the club roster.</p>
             <div class="wave-divider"></div>
         </div>
 
-        <!-- Form Section -->
         <div class="card-wrapper">
             <div class="lookup-card">
-                <div class="card-label">Country Lookup</div>
-                <h2 class="card-title">Enter a Southeast Asian country</h2>
+                <div class="card-label">Verification</div>
+                <h2 class="card-title">Who are you checking?</h2>
                 
-                <form id="lookup-form">
+                <form id="lookup-form" onsubmit="return false;">
                     <div class="input-group">
-                        <input type="text" id="country-input" class="country-input" placeholder="Enter a country..." autocomplete="off" required>
+                        <input type="text" id="name-input" class="name-input" placeholder="Type the person's full name" autocomplete="off" aria-label="Person's full name" required>
                     </div>
-                    <button type="submit" class="submit-btn" pyclick="lookup_country">Reveal Nickname</button>
+                    <button type="submit" class="submit-btn" py-click="lookup_confirm">Check membership <span aria-hidden="true">→</span></button>
                 </form>
 
-                <!-- Result Container -->
-                <div id="result" class="result-box">
-                    <div id="result-title" class="result-title"></div>
-                    <div id="result-nickname" class="result-nickname"></div>
+                <!-- Target element matching document.getElementById("result-content") -->
+                <div id="result" class="result-box" role="status" aria-live="polite">
+                    <div id="result-content"></div>
                 </div>
+
+                <p class="roster-note">Official roster is active. Case-insensitive matching enabled.</p>
             </div>
         </div>
     </div>
