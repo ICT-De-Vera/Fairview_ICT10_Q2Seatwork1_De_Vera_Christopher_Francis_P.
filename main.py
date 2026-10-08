@@ -18,7 +18,6 @@ def lookup_confirm(e):
 
     member_name = " ".join(document.getElementById("name-input").value.split())
     result_box = document.getElementById("result")
-    result_target = document.getElementById("result-content")
 
     # Reset display state before showing the new result.
     result_box.classList.add("active")
@@ -27,7 +26,7 @@ def lookup_confirm(e):
     # Check if the input is empty.
     if not member_name:
         result_box.classList.add("not-member")
-        display("Enter a member name to run the directory check.", target=result_target, append=False)
+        display("Enter a member name to run the directory check.", target="result-content", append=False)
         return
 
     member = MEMBER_NAMES.get(member_name.casefold())
@@ -37,6 +36,6 @@ def lookup_confirm(e):
         result_box.classList.add("not-member")
         message = f"NO MATCH {member_name} is not listed in the ICT Club directory."
 
-    display(message, target=result_target, append=False)
+    display(message, target="result-content", append=False)
 
 
