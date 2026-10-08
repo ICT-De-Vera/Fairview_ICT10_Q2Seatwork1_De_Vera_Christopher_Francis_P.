@@ -1,34 +1,42 @@
 from pyscript import document, display
 
-# Function to look up a country's nickname
-def lookup_country():
-    country = document.getElementById("country-input").value.strip().lower()
 
-    if country == "philippines":
-        display("Pearl of the Orient Seas")
-    elif country == "thailand":
-        display("Land of Smiles")
-    elif country == "vietnam":
-        display("Land of the Ascending Dragon")
-    elif country == "singapore":
-        display("The Lion City")
-    elif country == "indonesia":
-        display("Emerald of the Equator")
-    elif country == "malaysia":
-        display("Truly Asia")
-    elif country == "myanmar":
-        display("The Golden Land")
-    elif country == "burma":
-        display("The Golden Land")
-    elif country == "laos":
-        display("Land of a Million Elephants")
-    elif country == "cambodia":
-        display("Kingdom of Wonder")
-    elif country == "brunei":
-        display("Abode of Peace")
-    elif country == "timor leste" or country == "east timor":
-        display("The Rising Sun")
+# ICT Tech Club directory. Checks case-insensitive.
+MEMBER_NAMES = {
+    "christopher francis p. de vera": "Christopher Francis P. De Vera",
+    "jan immanuel d. cabading": "Jan Immanuel D. Cabading",
+    "carlos eziquel b. borromeo": "Carlos Eziquel B. Borromeo",
+    "jericho t. magsalin": "Jericho T. Magsalin",
+    "louie vonn m. lee": "Louie Vonn M. Lee",
+    "gerthy b. bausa": "Gerthy B. Bausa",
+}
+
+#lookup process
+def lookup_confirm(e):
+    if e:
+        e.preventDefault()
+
+    member_name = " ".join(document.getElementById("name-input").value.split())
+    result_box = document.getElementById("result")
+    result_target = document.getElementById("result-content")
+
+    # Reset display state before showing the new result.
+    result_box.classList.add("active")
+    result_box.classList.remove("not-member")
+
+    # Check if the input is empty.
+    if not member_name:
+        result_box.classList.add("not-member")
+        display("Enter a member name to run the directory check.", target=result_target, append=False)
+        return
+
+    member = MEMBER_NAMES.get(member_name.casefold())
+    if member:
+        message = f"MEMBER VERIFIED {member} is an ICT Club member."
     else:
-        display("Country not found.")
+        result_box.classList.add("not-member")
+        message = f"NO MATCH {member_name} is not listed in the ICT Club directory."
+
+    display(message, target=result_target, append=False)
 
 
